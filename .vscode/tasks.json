@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "makeOsgEarthOpenDrive",
+      "type": "shell",
+      "command": "/usr/bin/cmake --build \"${workspaceRoot}/build\" --config RelWithDebInfo -- osgEarthOpenDrive -j8"
+    }
+  ]
+}

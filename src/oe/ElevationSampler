@@ -1,0 +1,24 @@
+#ifndef OSGEARTH_UTIL_ELEVATION_SAMPLER
+#define OSGEARTH_UTIL_ELEVATION_SAMPLER 1
+
+#include <osgEarth/Common>
+#include <osgEarth/ElevationPool>
+#include <osgEarth/Map>
+
+namespace osgEarth { namespace Contrib
+{
+    /**
+     * Elevation sampling wrapper
+     */
+    class OSGEARTH_EXPORT ElevationSampler
+    {
+    public:
+        ElevationSampler(Map* map);
+        double getElevation(const SpatialReference* geomSRS, const osg::Vec3d& p);
+    private:
+        osg::ref_ptr<ElevationPool> _pool;
+        mutable ElevationPool::WorkingSet _elevWorkingSet;
+    };
+} }
+
+#endif // OSGEARTH_UTIL_ELEVATION_SAMPLER

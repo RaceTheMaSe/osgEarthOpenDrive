@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "osgEarthOpenDrive",
+      "program": "${workspaceFolder}/build/osgEarthOpenDrive",
+      "args": [
+        "${workspaceFolder}/simple.earth",
+        "--odr",
+        "<provide-a-xodr-file>",
+        "--cut_terrain",
+        "--terrain_blend",
+        "--from","covise",
+        "--resources","/path-to-covise-install/" // covise resource folder only
+      ],
+      "cwd": "${workspaceFolder}/resources",
+      "env": {
+        "LD_LIBRARY_PATH": "${env:LD_LIBRARY_PATH}:${env:OSG_DIR}/lib/osgPlugins-3.6.5:${env:OSG_DIR}/lib:${env:OSG_EARTH_DIR}/lib64/",
+        "OSGEARTH_CACHE_PATH": "${workspaceFolder}/cache"
+      },
+      "preLaunchTask": "makeOsgEarthOpenDrive",
+    }
+  ]
+}

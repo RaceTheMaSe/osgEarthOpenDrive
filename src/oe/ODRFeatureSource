@@ -1,0 +1,52 @@
+#pragma once
+
+#include <osgEarth/Geometry>
+#ifndef OSGEARTH_FEATURES_ODRFEATURESOURCE_LAYER
+#define OSGEARTH_FEATURES_ODRFEATURESOURCE_LAYER
+
+#include <osgEarth/FeatureSource>
+#include <queue>
+
+namespace osgEarth
+{
+    /**
+     * Simple Feature Layer that accesses open drive (xodr) 3d line geometries
+     */
+    class OSGEARTH_EXPORT ODRFeatureSource : public FeatureSource
+    {
+    public:  // serialization
+        class OSGEARTH_EXPORT Options : public FeatureSource::Options
+        {
+        public:
+            META_LayerOptions(osgEarth, Options, FeatureSource::Options);
+            virtual Config getConfig() const;
+
+        private:
+            void fromConfig(const Config& conf);
+        };
+
+    public:
+        META_Layer(osgEarth, ODRFeatureSource, Options, FeatureSource, ODRFeatures);
+
+        Status create(FeatureList&& features);
+
+    public:  // FeatureSource
+        virtual FeatureCursor*           createFeatureCursorImplementation(const Query& query, ProgressCallback* progress);
+        virtual int                      getFeatureCount() const;
+        virtual bool                     supportsGetFeature() const;
+        virtual Feature*                 getFeature(FeatureID fid);
+        virtual bool                     insertFeature(Feature* feature);
+        virtual osgEarth::Geometry::Type getGeometryType() const;
+
+    protected:
+        virtual ~ODRFeatureSource();
+
+    public:
+        FeatureList _features;
+    };
+
+}  // namespace osgEarth
+
+OSGEARTH_SPECIALIZE_CONFIG(osgEarth::ODRFeatureSource::Options);
+
+#endif  // OSGEARTH_FEATURES_ODRFEATURESOURCE_LAYER
